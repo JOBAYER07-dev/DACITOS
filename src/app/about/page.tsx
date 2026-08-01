@@ -8,6 +8,7 @@ import {
 import Link from 'next/link';
 import Reveal from '@/components/Reveal';
 import type { Metadata } from 'next';
+import CountUp from '@/components/CountUp';
 
 export const metadata: Metadata = {
   title: 'About Us | Dacitos Technologies',
@@ -73,16 +74,16 @@ export default function About() {
       <section className="px-6 py-16 border-y border-border-subtle bg-ink-elevated/60">
         <div className="max-w-5xl mx-auto grid grid-cols-2 md:grid-cols-4 gap-8 text-center">
           {[
-            ['1+', 'Years of excellence'],
-            ['5+', 'Happy clients'],
-            ['10+', 'Projects completed'],
-            ['1+', 'Countries served'],
-          ].map(([val, label], i) => (
-            <Reveal key={label} delay={i * 0.08}>
+            { value: 1, suffix: '+', label: 'Years of excellence' },
+            { value: 5, suffix: '+', label: 'Happy clients' },
+            { value: 10, suffix: '+', label: 'Projects completed' },
+            { value: 1, suffix: '+', label: 'Countries served' },
+          ].map((stat, i) => (
+            <Reveal key={stat.label} delay={i * 0.08}>
               <div className="font-display text-3xl font-semibold gradient-text">
-                {val}
+                <CountUp value={stat.value} suffix={stat.suffix} />
               </div>
-              <div className="text-sm text-text-muted mt-1">{label}</div>
+              <div className="text-sm text-text-muted mt-1">{stat.label}</div>
             </Reveal>
           ))}
         </div>
