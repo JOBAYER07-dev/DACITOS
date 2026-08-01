@@ -1,45 +1,18 @@
-"use client";
+'use client';
 
-import { useState } from "react";
-import { Calendar, Users2 } from "lucide-react";
-import Reveal from "@/components/Reveal";
+import { useState } from 'react';
+import Link from 'next/link';
+import { Calendar, Users2, ArrowUpRight } from 'lucide-react';
+import Reveal from '@/components/Reveal';
 import CountUp from '@/components/CountUp';
+import { projects } from '@/lib/projects';
 
-const categories = ["All", "Web Development", "Mobile Apps", "Cloud Solutions", "Custom Software"];
-
-const projects = [
-  {
-    name: "Sion Semiconductors",
-    cat: "Web Development",
-    desc: "Corporate platform showcasing expertise in AI, IoT, and semiconductor design.",
-    stack: ["Angular", "Node.js", "MongoDB"],
-    days: "34 days",
-    devs: "05 developers",
-  },
-  {
-    name: "Acmegrade",
-    cat: "Web Development",
-    desc: "Modern education and skill-development platform built for scale.",
-    stack: ["Next.js", "Node.js", "Express.js"],
-    days: "30 days",
-    devs: "03 developers",
-  },
-  {
-    name: "Infinitix Technologies",
-    cat: "Web Development",
-    desc: "Digital experience platform for an IT, cloud, and GIS solutions provider.",
-    stack: ["Next.js", "Node.js", "Express.js"],
-    days: "14 days",
-    devs: "07 developers",
-  },
-  {
-    name: "CloudDBTech",
-    cat: "Cloud Solutions",
-    desc: "Enterprise site for a cloud consulting and data platform company.",
-    stack: ["Angular", "Node.js", "MongoDB"],
-    days: "20 days",
-    devs: "03 developers",
-  },
+const categories = [
+  'All',
+  'Web Development',
+  'Mobile Apps',
+  'Cloud Solutions',
+  'Custom Software',
 ];
 
 const impact = [
@@ -50,8 +23,9 @@ const impact = [
 ];
 
 export default function Portfolio() {
-  const [active, setActive] = useState("All");
-  const filtered = active === "All" ? projects : projects.filter((p) => p.cat === active);
+  const [active, setActive] = useState('All');
+  const filtered =
+    active === 'All' ? projects : projects.filter(p => p.cat === active);
 
   return (
     <>
@@ -90,8 +64,11 @@ export default function Portfolio() {
       <section className="px-6 pb-24">
         <div className="max-w-6xl mx-auto grid md:grid-cols-2 gap-5">
           {filtered.map((p, i) => (
-            <Reveal key={p.name} delay={i * 0.08}>
-              <div className="glass-card rounded-2xl overflow-hidden group h-full flex flex-col">
+            <Reveal key={p.slug} delay={i * 0.08}>
+              <Link
+                href={`/portfolio/${p.slug}`}
+                className="glass-card rounded-2xl overflow-hidden group h-full flex flex-col hover:translate-y-[-4px] transition-transform duration-300"
+              >
                 <div className="h-44 bg-gradient-to-br from-ink-surface to-ink-elevated relative flex items-center justify-center">
                   <span className="font-display text-3xl text-text-primary/10 group-hover:text-cyan/20 transition-colors">
                     {p.name}
@@ -101,9 +78,12 @@ export default function Portfolio() {
                   </span>
                 </div>
                 <div className="p-7 flex-1 flex flex-col">
-                  <h3 className="font-display text-xl font-medium text-text-primary">
-                    {p.name}
-                  </h3>
+                  <div className="flex items-start justify-between gap-3">
+                    <h3 className="font-display text-xl font-medium text-text-primary">
+                      {p.name}
+                    </h3>
+                    <ArrowUpRight className="w-4.5 h-4.5 text-text-muted group-hover:text-cyan transition-colors shrink-0 mt-1" />
+                  </div>
                   <p className="mt-2 text-sm text-text-secondary leading-relaxed flex-1">
                     {p.desc}
                   </p>
@@ -126,7 +106,7 @@ export default function Portfolio() {
                     </span>
                   </div>
                 </div>
-              </div>
+              </Link>
             </Reveal>
           ))}
         </div>

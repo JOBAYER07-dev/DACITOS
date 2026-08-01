@@ -229,23 +229,29 @@ export default function Home() {
           <div className="mt-12 grid md:grid-cols-3 gap-5">
             {[
               {
+                slug: 'sion-semiconductors',
                 name: 'Sion Semiconductors',
                 cat: 'Web Development',
                 stack: 'Angular · Node.js · MongoDB',
               },
               {
+                slug: 'acmegrade',
                 name: 'Acmegrade',
                 cat: 'Web Development',
                 stack: 'Next.js · Node.js · Express.js',
               },
               {
+                slug: 'infinitix-technologies',
                 name: 'Infinitix Technologies',
                 cat: 'Web Development',
                 stack: 'Next.js · Node.js · Express.js',
               },
             ].map((proj, i) => (
-              <Reveal key={proj.name} delay={i * 0.08}>
-                <div className="glass-card rounded-2xl overflow-hidden group">
+              <Reveal key={proj.slug} delay={i * 0.08}>
+                <Link
+                  href={`/portfolio/${proj.slug}`}
+                  className="glass-card rounded-2xl overflow-hidden group block"
+                >
                   <div className="h-40 bg-gradient-to-br from-ink-surface to-ink-elevated relative flex items-center justify-center">
                     <span className="font-display text-2xl text-text-primary/15 group-hover:text-cyan/20 transition-colors">
                       {proj.name}
@@ -262,7 +268,7 @@ export default function Home() {
                       {proj.stack}
                     </p>
                   </div>
-                </div>
+                </Link>
               </Reveal>
             ))}
           </div>
