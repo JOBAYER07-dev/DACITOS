@@ -11,12 +11,13 @@ import {
 } from "lucide-react";
 import Reveal from "@/components/Reveal";
 import StackVisual from "@/components/StackVisual";
+import CountUp from '@/components/CountUp';
 
 const stats = [
-  { value: "25+", label: "Projects delivered" },
-  { value: "23+", label: "Clients served" },
-  { value: "99.9%", label: "System uptime" },
-  { value: "100%", label: "Client satisfaction" },
+  { value: 25, suffix: '+', label: 'Projects delivered' },
+  { value: 23, suffix: '+', label: 'Clients served' },
+  { value: 99.9, suffix: '%', decimals: 1, label: 'System uptime' },
+  { value: 100, suffix: '%', label: 'Client satisfaction' },
 ];
 
 const services = [
@@ -82,9 +83,9 @@ export default function Home() {
             </Reveal>
             <Reveal delay={0.16}>
               <p className="mt-6 text-lg text-text-secondary max-w-lg leading-relaxed">
-                Dacitos is a full-stack technology partner — web, mobile, cloud, and
-                custom software, delivered by a team that treats your product like
-                its own.
+                Dacitos is a full-stack technology partner — web, mobile, cloud,
+                and custom software, delivered by a team that treats your
+                product like its own.
               </p>
             </Reveal>
             <Reveal delay={0.24}>
@@ -119,7 +120,11 @@ export default function Home() {
             <Reveal key={s.label} delay={i * 0.08}>
               <div className="text-center md:text-left">
                 <div className="font-display text-3xl sm:text-4xl font-semibold gradient-text">
-                  {s.value}
+                  <CountUp
+                    value={s.value}
+                    suffix={s.suffix}
+                    decimals={s.decimals ?? 0}
+                  />
                 </div>
                 <div className="mt-1 text-sm text-text-muted">{s.label}</div>
               </div>
@@ -152,7 +157,7 @@ export default function Home() {
                     {s.desc}
                   </p>
                   <div className="mt-5 flex flex-wrap gap-2">
-                    {s.tags.map((t) => (
+                    {s.tags.map(t => (
                       <span
                         key={t}
                         className="font-mono text-[0.68rem] text-text-muted border border-border-subtle rounded-full px-2.5 py-1"
@@ -220,9 +225,21 @@ export default function Home() {
 
           <div className="mt-12 grid md:grid-cols-3 gap-5">
             {[
-              { name: "Sion Semiconductors", cat: "Web Development", stack: "Angular · Node.js · MongoDB" },
-              { name: "Acmegrade", cat: "Web Development", stack: "Next.js · Node.js · Express.js" },
-              { name: "Infinitix Technologies", cat: "Web Development", stack: "Next.js · Node.js · Express.js" },
+              {
+                name: 'Sion Semiconductors',
+                cat: 'Web Development',
+                stack: 'Angular · Node.js · MongoDB',
+              },
+              {
+                name: 'Acmegrade',
+                cat: 'Web Development',
+                stack: 'Next.js · Node.js · Express.js',
+              },
+              {
+                name: 'Infinitix Technologies',
+                cat: 'Web Development',
+                stack: 'Next.js · Node.js · Express.js',
+              },
             ].map((proj, i) => (
               <Reveal key={proj.name} delay={i * 0.08}>
                 <div className="glass-card rounded-2xl overflow-hidden group">
@@ -232,11 +249,15 @@ export default function Home() {
                     </span>
                   </div>
                   <div className="p-6">
-                    <span className="font-mono text-[0.68rem] text-cyan-soft">{proj.cat}</span>
+                    <span className="font-mono text-[0.68rem] text-cyan-soft">
+                      {proj.cat}
+                    </span>
                     <h3 className="font-display text-lg font-medium mt-1.5 text-text-primary">
                       {proj.name}
                     </h3>
-                    <p className="mt-2 text-xs text-text-muted font-mono">{proj.stack}</p>
+                    <p className="mt-2 text-xs text-text-muted font-mono">
+                      {proj.stack}
+                    </p>
                   </div>
                 </div>
               </Reveal>
@@ -255,16 +276,21 @@ export default function Home() {
               ))}
             </div>
             <p className="font-display text-2xl sm:text-3xl font-medium leading-snug text-text-primary">
-              &ldquo;Working with Dacitos was a genuine step-change for our operations —
-              their platform gave us delivery tracking across every city we run in.&rdquo;
+              &ldquo;Working with Dacitos was a genuine step-change for our
+              operations — their platform gave us delivery tracking across every
+              city we run in.&rdquo;
             </p>
             <div className="mt-8 flex items-center justify-center gap-3">
               <div className="h-10 w-10 rounded-full bg-gradient-to-br from-cyan to-indigo flex items-center justify-center font-display text-sm text-ink font-semibold">
                 R
               </div>
               <div className="text-left">
-                <div className="text-sm font-medium text-text-primary">Rahul Sharma</div>
-                <div className="text-xs text-text-muted">Founder, Sharma Logistics Pvt. Ltd.</div>
+                <div className="text-sm font-medium text-text-primary">
+                  Rahul Sharma
+                </div>
+                <div className="text-xs text-text-muted">
+                  Founder, Sharma Logistics Pvt. Ltd.
+                </div>
               </div>
             </div>
           </Reveal>
@@ -282,19 +308,24 @@ export default function Home() {
                   Ready to build something that lasts?
                 </h2>
                 <p className="mt-4 text-text-secondary max-w-md mx-auto">
-                  Free 30-minute consultation. No obligation, no generic pitch — just
-                  a real conversation about your product.
+                  Free 30-minute consultation. No obligation, no generic pitch —
+                  just a real conversation about your product.
                 </p>
                 <div className="mt-8 flex flex-wrap justify-center gap-4">
                   <Link
                     href="/contact"
                     className="inline-flex items-center gap-2 rounded-full bg-cyan text-ink px-6 py-3.5 font-medium hover:bg-cyan-soft transition-colors"
                   >
-                    Book a free consultation <ArrowUpRight className="w-4 h-4" />
+                    Book a free consultation{' '}
+                    <ArrowUpRight className="w-4 h-4" />
                   </Link>
                 </div>
                 <div className="mt-6 flex flex-wrap justify-center gap-x-6 gap-y-2 text-xs text-text-muted">
-                  {["Free consultation", "Custom solutions", "Ongoing support"].map((t) => (
+                  {[
+                    'Free consultation',
+                    'Custom solutions',
+                    'Ongoing support',
+                  ].map(t => (
                     <span key={t} className="inline-flex items-center gap-1.5">
                       <CheckCircle2 className="w-3.5 h-3.5 text-cyan" /> {t}
                     </span>

@@ -3,6 +3,7 @@
 import { useState } from "react";
 import { Calendar, Users2 } from "lucide-react";
 import Reveal from "@/components/Reveal";
+import CountUp from '@/components/CountUp';
 
 const categories = ["All", "Web Development", "Mobile Apps", "Cloud Solutions", "Custom Software"];
 
@@ -42,10 +43,10 @@ const projects = [
 ];
 
 const impact = [
-  ["250%", "Average ROI increase"],
-  ["99.9%", "System uptime"],
-  ["100%", "Security compliance"],
-  ["100%", "Client satisfaction"],
+  { value: 250, suffix: '%', label: 'Average ROI increase' },
+  { value: 99.9, suffix: '%', decimals: 1, label: 'System uptime' },
+  { value: 100, suffix: '%', label: 'Security compliance' },
+  { value: 100, suffix: '%', label: 'Client satisfaction' },
 ];
 
 export default function Portfolio() {
@@ -58,25 +59,26 @@ export default function Portfolio() {
         <Reveal>
           <span className="eyebrow text-cyan-soft">Our portfolio</span>
           <h1 className="font-display font-semibold text-4xl sm:text-5xl mt-4">
-            Work we&apos;re proud to <span className="gradient-text">put our name on.</span>
+            Work we&apos;re proud to{' '}
+            <span className="gradient-text">put our name on.</span>
           </h1>
           <p className="mt-5 text-text-secondary max-w-xl mx-auto">
-            A look at how we&apos;ve helped businesses across industries reach their
-            digital transformation goals.
+            A look at how we&apos;ve helped businesses across industries reach
+            their digital transformation goals.
           </p>
         </Reveal>
       </section>
 
       <section className="px-6 pb-8">
         <div className="max-w-6xl mx-auto flex flex-wrap justify-center gap-3">
-          {categories.map((c) => (
+          {categories.map(c => (
             <button
               key={c}
               onClick={() => setActive(c)}
               className={`rounded-full px-4 py-2 text-sm border transition-colors ${
                 active === c
-                  ? "bg-cyan text-ink border-cyan font-medium"
-                  : "border-border-subtle text-text-secondary hover:border-border-strong"
+                  ? 'bg-cyan text-ink border-cyan font-medium'
+                  : 'border-border-subtle text-text-secondary hover:border-border-strong'
               }`}
             >
               {c}
@@ -99,18 +101,29 @@ export default function Portfolio() {
                   </span>
                 </div>
                 <div className="p-7 flex-1 flex flex-col">
-                  <h3 className="font-display text-xl font-medium text-text-primary">{p.name}</h3>
-                  <p className="mt-2 text-sm text-text-secondary leading-relaxed flex-1">{p.desc}</p>
+                  <h3 className="font-display text-xl font-medium text-text-primary">
+                    {p.name}
+                  </h3>
+                  <p className="mt-2 text-sm text-text-secondary leading-relaxed flex-1">
+                    {p.desc}
+                  </p>
                   <div className="mt-4 flex flex-wrap gap-2">
-                    {p.stack.map((s) => (
-                      <span key={s} className="font-mono text-[0.68rem] text-text-muted border border-border-subtle rounded-full px-2.5 py-1">
+                    {p.stack.map(s => (
+                      <span
+                        key={s}
+                        className="font-mono text-[0.68rem] text-text-muted border border-border-subtle rounded-full px-2.5 py-1"
+                      >
                         {s}
                       </span>
                     ))}
                   </div>
                   <div className="mt-5 flex items-center gap-5 text-xs text-text-muted">
-                    <span className="inline-flex items-center gap-1.5"><Calendar className="w-3.5 h-3.5" /> {p.days}</span>
-                    <span className="inline-flex items-center gap-1.5"><Users2 className="w-3.5 h-3.5" /> {p.devs}</span>
+                    <span className="inline-flex items-center gap-1.5">
+                      <Calendar className="w-3.5 h-3.5" /> {p.days}
+                    </span>
+                    <span className="inline-flex items-center gap-1.5">
+                      <Users2 className="w-3.5 h-3.5" /> {p.devs}
+                    </span>
                   </div>
                 </div>
               </div>
@@ -128,11 +141,19 @@ export default function Portfolio() {
             </h2>
           </Reveal>
           <div className="mt-12 grid grid-cols-2 md:grid-cols-4 gap-6">
-            {impact.map(([val, label], i) => (
-              <Reveal key={label} delay={i * 0.08}>
+            {impact.map((stat, i) => (
+              <Reveal key={stat.label} delay={i * 0.08}>
                 <div className="glass-card rounded-2xl py-8">
-                  <div className="font-display text-3xl font-semibold gradient-text">{val}</div>
-                  <div className="text-xs text-text-muted mt-2">{label}</div>
+                  <div className="font-display text-3xl font-semibold gradient-text">
+                    <CountUp
+                      value={stat.value}
+                      suffix={stat.suffix}
+                      decimals={stat.decimals ?? 0}
+                    />
+                  </div>
+                  <div className="text-xs text-text-muted mt-2">
+                    {stat.label}
+                  </div>
                 </div>
               </Reveal>
             ))}
