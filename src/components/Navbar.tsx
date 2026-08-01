@@ -1,8 +1,9 @@
-"use client";
+'use client';
 
-import Link from "next/link";
-import { useEffect, useState } from "react";
-import { motion, AnimatePresence } from "framer-motion";
+import Link from 'next/link';
+import { usePathname } from 'next/navigation';
+import { useEffect, useRef, useState } from 'react';
+import { motion, AnimatePresence } from 'framer-motion';
 import {
   Menu,
   X,
@@ -13,48 +14,109 @@ import {
   Cloud,
   Code2,
   Compass,
-} from "lucide-react";
-import ThemeToggle from "./ThemeToggle";
+} from 'lucide-react';
+import ThemeToggle from './ThemeToggle';
 
 const links = [
-  { href: "/", label: "Home" },
-  { href: "/about", label: "About" },
-  { href: "/portfolio", label: "Portfolio" },
-  { href: "/blog", label: "Blog" },
-  { href: "/contact", label: "Contact" },
+  { href: '/', label: 'Home' },
+  { href: '/about', label: 'About' },
+  { href: '/portfolio', label: 'Portfolio' },
+  { href: '/blog', label: 'Blog' },
+  { href: '/contact', label: 'Contact' },
 ];
 
 const services = [
-  { icon: Globe, title: "Web Development", desc: "Custom websites & web applications", href: "/#services" },
-  { icon: Smartphone, title: "Mobile Apps", desc: "iOS & Android development", href: "/#services" },
-  { icon: Cloud, title: "Cloud Services", desc: "AWS, Azure & cloud migration", href: "/#services" },
-  { icon: Code2, title: "Custom Software", desc: "Tailored software solutions", href: "/#services" },
-  { icon: Compass, title: "IT Consulting", desc: "Strategic technology guidance", href: "/#services" },
+  {
+    icon: Globe,
+    title: 'Web Development',
+    desc: 'Custom websites & web applications',
+    href: '/#services',
+  },
+  {
+    icon: Smartphone,
+    title: 'Mobile Apps',
+    desc: 'iOS & Android development',
+    href: '/#services',
+  },
+  {
+    icon: Cloud,
+    title: 'Cloud Services',
+    desc: 'AWS, Azure & cloud migration',
+    href: '/#services',
+  },
+  {
+    icon: Code2,
+    title: 'Custom Software',
+    desc: 'Tailored software solutions',
+    href: '/#services',
+  },
+  {
+    icon: Compass,
+    title: 'IT Consulting',
+    desc: 'Strategic technology guidance',
+    href: '/#services',
+  },
 ];
 
 export default function Navbar() {
+  const pathname = usePathname();
   const [scrolled, setScrolled] = useState(false);
   const [open, setOpen] = useState(false);
   const [servicesOpen, setServicesOpen] = useState(false);
+  const mobileMenuRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
     const onScroll = () => setScrolled(window.scrollY > 24);
-    window.addEventListener("scroll", onScroll);
-    return () => window.removeEventListener("scroll", onScroll);
+    window.addEventListener('scroll', onScroll);
+    return () => window.removeEventListener('scroll', onScroll);
   }, []);
+
+  useEffect(() => {
+    function onClickOutside(e: MouseEvent) {
+      if (
+        open &&
+        mobileMenuRef.current &&
+        !mobileMenuRef.current.contains(e.target as Node)
+      ) {
+        setOpen(false);
+      }
+    }
+    document.addEventListener('mousedown', onClickOutside);
+    return () => document.removeEventListener('mousedown', onClickOutside);
+  }, [open]);
+
+  function scrollToServices(e: React.MouseEvent) {
+    if (window.location.pathname === '/') {
+      e.preventDefault();
+      setServicesOpen(false);
+      const el = document.getElementById('services');
+      const lenis = (
+        window as unknown as {
+          __lenis?: { scrollTo: (t: Element, o?: { offset?: number }) => void };
+        }
+      ).__lenis;
+      if (el && lenis) {
+        lenis.scrollTo(el, { offset: -90 });
+      } else if (el) {
+        el.scrollIntoView({ behavior: 'smooth' });
+      }
+    } else {
+      setServicesOpen(false);
+    }
+  }
 
   return (
     <header
       className={`fixed top-0 inset-x-0 z-50 transition-all duration-500 ${
-        scrolled ? "py-3" : "py-6"
+        scrolled ? 'py-3' : 'py-6'
       }`}
     >
       <div className="max-w-7xl mx-auto px-6">
         <div
           className={`flex items-center justify-between rounded-2xl px-5 transition-all duration-500 ${
             scrolled
-              ? "glass-card py-3 shadow-[0_8px_40px_rgba(0,0,0,0.35)]"
-              : "py-2"
+              ? 'glass-card py-3 shadow-[0_8px_40px_rgba(0,0,0,0.35)]'
+              : 'py-2'
           }`}
         >
           <Link href="/" className="flex items-center gap-2.5 group">
@@ -72,19 +134,31 @@ export default function Navbar() {
           <nav className="hidden md:flex items-center gap-8">
             <Link
               href="/"
-              className="text-[0.9rem] text-text-secondary hover:text-text-primary transition-colors"
+              className={`text-[0.9rem] transition-colors ${
+                pathname === '/'
+                  ? 'text-cyan-soft'
+                  : 'text-text-secondary hover:text-text-primary'
+              }`}
             >
               Home
             </Link>
             <Link
               href="/about"
-              className="text-[0.9rem] text-text-secondary hover:text-text-primary transition-colors"
+              className={`text-[0.9rem] transition-colors ${
+                pathname === '/about'
+                  ? 'text-cyan-soft'
+                  : 'text-text-secondary hover:text-text-primary'
+              }`}
             >
               About
             </Link>
             <Link
               href="/portfolio"
-              className="text-[0.9rem] text-text-secondary hover:text-text-primary transition-colors"
+              className={`text-[0.9rem] transition-colors ${
+                pathname === '/portfolio'
+                  ? 'text-cyan-soft'
+                  : 'text-text-secondary hover:text-text-primary'
+              }`}
             >
               Portfolio
             </Link>
@@ -97,7 +171,7 @@ export default function Navbar() {
               <button className="flex items-center gap-1 text-[0.9rem] text-text-secondary hover:text-text-primary transition-colors">
                 Services
                 <ChevronDown
-                  className={`w-3.5 h-3.5 transition-transform ${servicesOpen ? "rotate-180" : ""}`}
+                  className={`w-3.5 h-3.5 transition-transform ${servicesOpen ? 'rotate-180' : ''}`}
                 />
               </button>
 
@@ -111,23 +185,29 @@ export default function Navbar() {
                     className="absolute top-full left-1/2 -translate-x-1/2 pt-4 w-[320px]"
                   >
                     <div className="glass-card rounded-2xl p-3 shadow-[0_20px_60px_rgba(0,0,0,0.4)]">
-                      {services.map((s) => (
+                      {services.map(s => (
                         <Link
                           key={s.title}
                           href={s.href}
+                          onClick={scrollToServices}
                           className="flex items-start gap-3 rounded-xl px-3 py-2.5 hover:bg-white/5 transition-colors"
                         >
                           <div className="flex h-8 w-8 items-center justify-center rounded-lg bg-gradient-to-br from-cyan/15 to-indigo/15 shrink-0 mt-0.5">
                             <s.icon className="w-4 h-4 text-cyan-soft" />
                           </div>
                           <div>
-                            <div className="text-sm font-medium text-text-primary">{s.title}</div>
-                            <div className="text-xs text-text-muted mt-0.5">{s.desc}</div>
+                            <div className="text-sm font-medium text-text-primary">
+                              {s.title}
+                            </div>
+                            <div className="text-xs text-text-muted mt-0.5">
+                              {s.desc}
+                            </div>
                           </div>
                         </Link>
                       ))}
                       <Link
                         href="/#services"
+                        onClick={scrollToServices}
                         className="block text-center text-xs font-medium text-cyan-soft hover:text-cyan mt-1 pt-2 border-t border-border-subtle px-3 py-2"
                       >
                         View all services →
@@ -140,13 +220,21 @@ export default function Navbar() {
 
             <Link
               href="/blog"
-              className="text-[0.9rem] text-text-secondary hover:text-text-primary transition-colors"
+              className={`text-[0.9rem] transition-colors ${
+                pathname === '/blog'
+                  ? 'text-cyan-soft'
+                  : 'text-text-secondary hover:text-text-primary'
+              }`}
             >
               Blog
             </Link>
             <Link
               href="/contact"
-              className="text-[0.9rem] text-text-secondary hover:text-text-primary transition-colors"
+              className={`text-[0.9rem] transition-colors ${
+                pathname === '/contact'
+                  ? 'text-cyan-soft'
+                  : 'text-text-secondary hover:text-text-primary'
+              }`}
             >
               Contact
             </Link>
@@ -167,7 +255,7 @@ export default function Navbar() {
             <ThemeToggle />
             <button
               className="text-text-primary"
-              onClick={() => setOpen((v) => !v)}
+              onClick={() => setOpen(v => !v)}
               aria-label="Toggle menu"
             >
               {open ? <X className="w-6 h-6" /> : <Menu className="w-6 h-6" />}
@@ -179,13 +267,14 @@ export default function Navbar() {
       <AnimatePresence>
         {open && (
           <motion.div
+            ref={mobileMenuRef}
             initial={{ opacity: 0, y: -12 }}
             animate={{ opacity: 1, y: 0 }}
             exit={{ opacity: 0, y: -12 }}
             transition={{ duration: 0.25 }}
             className="md:hidden mx-6 mt-2 glass-card rounded-2xl p-5 flex flex-col gap-4"
           >
-            {links.map((link) => (
+            {links.map(link => (
               <Link
                 key={link.href}
                 href={link.href}
