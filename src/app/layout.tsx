@@ -4,6 +4,7 @@ import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
 import SmoothScroll from "@/components/SmoothScroll";
 import ScrollProgress from '@/components/ScrollProgress';
+import BackToTop from '@/components/BackToTop';
 
 export const metadata: Metadata = {
   title: "Dacitos Technologies | Your Trusted IT Partner",
@@ -32,6 +33,7 @@ export default function RootLayout({
         <ScrollProgress />
         <main className="flex-1 relative z-10">{children}</main>
         <Footer />
+        <BackToTop />
       </body>
     </html>
   );
