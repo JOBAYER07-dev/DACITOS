@@ -12,6 +12,7 @@ import {
 import Reveal from "@/components/Reveal";
 import StackVisual from "@/components/StackVisual";
 import CountUp from '@/components/CountUp';
+import MagneticButton from '@/components/MagneticButton';
 
 const stats = [
   { value: 25, suffix: '+', label: 'Projects delivered' },
@@ -90,13 +91,15 @@ export default function Home() {
             </Reveal>
             <Reveal delay={0.24}>
               <div className="mt-9 flex flex-wrap items-center gap-4">
-                <Link
-                  href="/contact"
-                  className="inline-flex items-center gap-2 rounded-full bg-cyan text-ink px-6 py-3.5 font-medium hover:bg-cyan-soft transition-colors"
-                >
-                  Start your project
-                  <ArrowUpRight className="w-4 h-4" />
-                </Link>
+                <MagneticButton>
+                  <Link
+                    href="/contact"
+                    className="inline-flex items-center gap-2 rounded-full bg-cyan text-ink px-6 py-3.5 font-medium hover:bg-cyan-soft transition-colors"
+                  >
+                    Start your project
+                    <ArrowUpRight className="w-4 h-4" />
+                  </Link>
+                </MagneticButton>
                 <Link
                   href="/portfolio"
                   className="inline-flex items-center gap-2 rounded-full border border-border-strong px-6 py-3.5 font-medium text-text-primary hover:border-cyan hover:text-cyan transition-colors"
@@ -312,13 +315,15 @@ export default function Home() {
                   just a real conversation about your product.
                 </p>
                 <div className="mt-8 flex flex-wrap justify-center gap-4">
-                  <Link
-                    href="/contact"
-                    className="inline-flex items-center gap-2 rounded-full bg-cyan text-ink px-6 py-3.5 font-medium hover:bg-cyan-soft transition-colors"
-                  >
-                    Book a free consultation{' '}
-                    <ArrowUpRight className="w-4 h-4" />
-                  </Link>
+                  <MagneticButton>
+                    <Link
+                      href="/contact"
+                      className="inline-flex items-center gap-2 rounded-full bg-cyan text-ink px-6 py-3.5 font-medium hover:bg-cyan-soft transition-colors"
+                    >
+                      Book a free consultation{' '}
+                      <ArrowUpRight className="w-4 h-4" />
+                    </Link>
+                  </MagneticButton>
                 </div>
                 <div className="mt-6 flex flex-wrap justify-center gap-x-6 gap-y-2 text-xs text-text-muted">
                   {[
