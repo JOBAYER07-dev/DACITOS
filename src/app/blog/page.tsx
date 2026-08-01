@@ -1,5 +1,12 @@
 import { ArrowUpRight } from "lucide-react";
 import Reveal from "@/components/Reveal";
+import type { Metadata } from 'next';
+
+export const metadata: Metadata = {
+  title: 'Blog | Dacitos Technologies',
+  description:
+    "Field notes on engineering, product decisions, and what we've learned shipping real software projects.",
+};
 
 const posts = [
   {
