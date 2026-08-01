@@ -3,6 +3,7 @@ import "./globals.css";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
 import SmoothScroll from "@/components/SmoothScroll";
+import ScrollProgress from '@/components/ScrollProgress';
 
 export const metadata: Metadata = {
   title: "Dacitos Technologies | Your Trusted IT Partner",
@@ -28,6 +29,7 @@ export default function RootLayout({
         <div className="noise-layer" />
         <SmoothScroll />
         <Navbar />
+        <ScrollProgress />
         <main className="flex-1 relative z-10">{children}</main>
         <Footer />
       </body>
